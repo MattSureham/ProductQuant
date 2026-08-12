@@ -1540,6 +1540,89 @@ Implement:
 - timestamp semantics;
 - basic dataset construction.
 
+### Restricted Phase 1 — UCI Transaction-Event Data Foundation
+
+**Status:** `ACCEPTED`
+
+**Authority:** `DECISION-PHASE0-01` and `DECISION-PHASE1-01`, approved by `human:technical-owner` and durably recorded at `2026-08-12T07:24:20Z`.
+
+Phase 1 MUST initially use UCI Online Retail II only as a historical transaction-event research substrate. This authorization does not make UCI a marketplace observation source and does not authorize any inference or reconstruction of historical listings, availability, marketplace supply, competition, independent demand, or a complete product-selection universe.
+
+The Phase 1 deliverable MUST:
+
+1. preserve the byte-exact, digest-pinned UCI ZIP as immutable local raw data outside Git;
+2. normalize retained physical workbook rows into a versioned `transaction_event.v1` Parquet artifact with source-row provenance;
+3. apply `uci-online-retail-ii-sheet-boundary-v1`: retain `Year 2009-2010` only before dataset-local naïve `2010-12-01T00:00:00`, and retain `Year 2010-2011` at or after that boundary;
+4. preserve within-sheet duplicates, cancellations, signed quantities and prices, nulls, extremes, observed text, and pseudonymous source customer references without imputation or future-derived enrichment;
+5. record retrieval/build provenance, source and output digests, schema/adapter versions, explicit timestamp semantics, quality counts, success/failure, and raw references in immutable manifests and receipts;
+6. fail closed on source digest, archive member, workbook sheet/header, required type, or normalized schema drift;
+7. provide deterministic rebuilds and local DuckDB verification without making a persistent DuckDB database a second source of truth; and
+8. keep every unsupported capability explicit in manifests, documentation, and later reports.
+
+The accepted `transaction_event.v1` contract contains:
+
+```text
+event_id: string, required
+raw_artifact_id: string, required
+source_id: string, required
+source_member: string, required
+source_sheet: string, required
+source_row_number: int64, required
+event_time_local: timestamp[us] without timezone, required
+source_invoice_id: string, required
+source_product_code: string, required
+description_observed: string, nullable
+quantity: int64, required
+unit_price: decimal128(18,3), required
+currency_code: string, required and provider-declared GBP
+customer_reference: string, nullable
+country_observed: string, required
+invoice_is_cancellation: boolean, required
+schema_version: string, required and equal to transaction_event.v1
+```
+
+`event_id` MUST be derived deterministically from the pinned raw artifact, canonical source sheet, and 1-based physical Excel row. Numeric integral identifiers MUST become base-10 strings without a `.0` suffix; existing strings MUST NOT be trimmed or case-normalized. Numeric descriptions MAY be losslessly represented as integral text while the original cell remains recoverable through the raw artifact, sheet, and row pointer. Prices MUST NOT be silently rounded to fit the contract.
+
+The exact event ID is:
+
+```text
+uci-online-retail-ii:sha256:<lowercase-archive-sha256>:<sheet-token>:<source-row-number>
+```
+
+The only sheet-token mappings are `Year 2009-2010 -> year-2009-2010` and `Year 2010-2011 -> year-2010-2011`. The source row is 1-based and includes the header, so the first data row is `2`.
+
+The supported Phase 1 software interface is limited to:
+
+```text
+productquant uci fetch     --data-root PATH [--offline]
+productquant uci normalize --data-root PATH
+productquant uci verify    --data-root PATH
+productquant uci prepare   --data-root PATH [--offline]
+```
+
+The default data root is `./data`. Offline operation MUST NOT access the network and requires a complete raw bundle, including its acquisition manifest. Exit status `0` means success, including a verified idempotent no-op; `2` means usage error, `3` network failure, `4` source-integrity or schema drift, `5` local I/O/state conflict, and `1` an unexpected internal failure.
+
+Successful commands MUST emit exactly one JSON object plus newline to stdout with fields `command`, `status`, `data_root`, `artifacts`, `statistics`, and `receipt_path`. `status` is `created` if any requested artifact was created and otherwise `verified`. Failures after a valid command is recognized MUST emit exactly one row-free JSON object plus newline to stderr with fields `command`, `status: error`, `error: {code, message}`, and nullable `receipt_path`. A parser/usage failure before a valid command is recognized MUST use the same shape with `command: null`, exit `2`, and `receipt_path: null`; parser help remains ordinary text on stdout and does not create a receipt. No command may log transaction or customer rows. No public Python API is part of this phase.
+
+Command receipts are immutable local operational state and contain only execution/provenance metadata, artifact references, aggregate statistics, and sanitized errors. They MUST NOT contain row values. Raw, normalized, and receipt artifacts MUST remain under Git-ignored local `data/`; on POSIX, newly created data directories/files MUST be owner-only. Publishing, remotely storing, enriching, or linking `customer_reference` to another identity requires a separate privacy/authority decision.
+
+For any future as-of consumer, information available at cutoff `t` is limited to rows with `event_time_local <= t`. Future targets, when separately authorized, begin strictly after `t`. Phase 1 MUST NOT materialize a product universe, target, factor, ranking, backtest, or research result. It MUST NOT use later descriptions, prices, product codes, aggregate statistics, or any other future information to fill earlier state.
+
+Each normalized manifest MUST declare at least:
+
+```text
+transaction-event history: supported
+marketplace listing state: unsupported
+marketplace supply/competition: unsupported
+independent external demand: unsupported
+complete product/opportunity universe: unsupported
+integrated ProductQuant v0.1 demonstration: unsupported
+historical provider revision state: unknown
+timezone: unknown
+```
+
+The marketplace and demand blockers remain unresolved. Section 50 remains unmet. Any Phase 2 transaction-demand factor semantics, including cancellation/return/netting policy, require a separate accepted specification before implementation.
+
 ## Phase 2 — Factor Engine
 
 Implement at least three factors.
