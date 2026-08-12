@@ -1608,7 +1608,7 @@ Command receipts are immutable local operational state and contain only executio
 
 For any future as-of consumer, information available at cutoff `t` is limited to rows with `event_time_local <= t`. Future targets, when separately authorized, begin strictly after `t`. Phase 1 MUST NOT materialize a product universe, target, factor, ranking, backtest, or research result. It MUST NOT use later descriptions, prices, product codes, aggregate statistics, or any other future information to fill earlier state.
 
-Each normalized manifest MUST declare at least:
+Each raw and normalized manifest MUST declare at least:
 
 ```text
 transaction-event history: supported
@@ -1620,6 +1620,11 @@ integrated ProductQuant v0.1 demonstration: unsupported
 historical provider revision state: unknown
 timezone: unknown
 ```
+
+This wording was reconciled at `2026-08-12T08:27:52Z` to preserve the exact
+owner-approved `DECISION-PHASE1-01` requirement that every manifest carry these
+capability declarations; the earlier accepted text incorrectly limited the
+declarations to normalized manifests.
 
 The marketplace and demand blockers remain unresolved. Section 50 remains unmet. Any Phase 2 transaction-demand factor semantics, including cancellation/return/netting policy, require a separate accepted specification before implementation.
 

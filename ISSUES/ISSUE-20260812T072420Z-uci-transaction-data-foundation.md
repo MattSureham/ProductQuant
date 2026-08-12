@@ -10,7 +10,7 @@
 - **Authority:** `HUMAN`
 - **Review:** `INDEPENDENT`
 - **Created UTC:** `2026-08-12T07:24:20Z`
-- **Updated UTC:** `2026-08-12T07:47:28Z`
+- **Updated UTC:** `2026-08-12T08:27:52Z`
 - **Requirements:** [`PROJECT_SPEC.md` sections 15–19, 21, 37, 40–44, 50–53 and Restricted Phase 1](../PROJECT_SPEC.md)
 - **ADRs:** [`ADR-20260812T072420Z-uci-transaction-data-foundation`](../ADR/ADR-20260812T072420Z-uci-transaction-data-foundation.md) (`ACCEPTED`)
 - **Evidence:** [`EVIDENCE-20260812T060103Z-historical-dataset-probes`](../EVIDENCE/EVIDENCE-20260812T060103Z-historical-dataset-probes.md); [`EVIDENCE-20260812T073451Z-uci-schema-contract-probe`](../EVIDENCE/EVIDENCE-20260812T073451Z-uci-schema-contract-probe.md)
@@ -146,6 +146,7 @@ Implement the accepted plan without a generic collector framework or persistent 
 | `2026-08-12T07:41:52Z` | `agent:codex-phase1` | `INVESTIGATING` | `INVESTIGATING` | Embedded the exact probe command, defined pre-command error JSON, and reconciled checkpoint/handoff for final proposal re-review. |
 | `2026-08-12T07:46:48Z` | `agent:codex-phase1-architecture-review` | `INVESTIGATING` | `INVESTIGATING` | Round 3 approved the corrected proposal with no material finding. |
 | `2026-08-12T07:47:28Z` | `agent:codex-phase1` | `INVESTIGATING` | `IMPLEMENTING` | Marked the owner-authorised, independently approved ADR accepted; implementation is now permitted. |
+| `2026-08-12T08:27:52Z` | `agent:codex-phase1` | `IMPLEMENTING` | `IMPLEMENTING` | During implementation review, reconciled the accidentally narrowed manifest wording against the exact higher-authority plan: raw and normalized manifests both carry all eight negative capability declarations. |
 
 ## Closure checklist
 

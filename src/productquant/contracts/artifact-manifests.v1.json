@@ -1,0 +1,202 @@
+{
+  "bundle_contracts": {
+    "normalized": {
+      "directory": "data/normalized/uci-online-retail-ii/<archive-sha256>/transaction-event-v1",
+      "exact_files": [
+        "events.parquet",
+        "manifest.json"
+      ]
+    },
+    "raw": {
+      "directory": "data/raw/uci-online-retail-ii/<archive-sha256>",
+      "exact_files": [
+        "online-retail-ii.zip",
+        "manifest.json"
+      ]
+    }
+  },
+  "contract_id": "productquant.artifact-manifests.v1",
+  "normalized_manifest": {
+    "build": {
+      "dependency_version_keys": [
+        "duckdb",
+        "openpyxl",
+        "pyarrow"
+      ],
+      "parquet_compression": "zstd",
+      "required_keys": [
+        "built_at_utc",
+        "git_revision",
+        "git_dirty",
+        "python_version",
+        "dependency_versions",
+        "parquet_compression",
+        "row_group_size"
+      ],
+      "row_group_size": 25000
+    },
+    "capabilities": {
+      "complete_product_opportunity_universe": "unsupported",
+      "historical_provider_revision_state": "unknown",
+      "independent_external_demand": "unsupported",
+      "integrated_productquant_v0_1": "unsupported",
+      "marketplace_listing_state": "unsupported",
+      "marketplace_supply_competition": "unsupported",
+      "timezone": "unknown",
+      "transaction_event_history": "supported"
+    },
+    "dataset": {
+      "path": "events.parquet",
+      "pyarrow_schema_contract": "productquant.transaction-event.v1",
+      "required_keys": [
+        "path",
+        "bytes",
+        "sha256",
+        "row_count",
+        "pyarrow_schema"
+      ]
+    },
+    "fixed_values": {
+      "artifact_id": "uci-online-retail-ii:sha256:572e36277c2390fbfde10664750731e0a86f55e33470d91919085f0408e67bfb:transaction-event.v1",
+      "normalizer_version": "uci-online-retail-ii-normalizer.v1",
+      "raw_artifact_id": "uci-online-retail-ii:sha256:572e36277c2390fbfde10664750731e0a86f55e33470d91919085f0408e67bfb",
+      "raw_manifest_reference": "raw-artifact://uci-online-retail-ii:sha256:572e36277c2390fbfde10664750731e0a86f55e33470d91919085f0408e67bfb/manifest.json",
+      "schema_version": "productquant.normalized-manifest.v1",
+      "source_schema_version": "transaction_event.v1"
+    },
+    "profile_keys": [
+      "event_time_min",
+      "event_time_max",
+      "unique_event_ids",
+      "unique_stock_codes",
+      "unique_invoices",
+      "cancellation_rows",
+      "negative_quantity_rows",
+      "zero_price_rows",
+      "negative_price_rows",
+      "missing_description_rows",
+      "missing_customer_rows",
+      "quantity_min",
+      "quantity_max",
+      "unit_price_min",
+      "unit_price_max",
+      "numeric_description_rows"
+    ],
+    "required_keys": [
+      "schema_version",
+      "artifact_id",
+      "raw_artifact_id",
+      "raw_manifest_reference",
+      "dataset",
+      "source_schema_version",
+      "normalizer_version",
+      "build",
+      "stitch",
+      "time_semantics",
+      "profile",
+      "capabilities"
+    ],
+    "stitch": {
+      "cutoff_local": "2010-12-01T00:00:00.000000",
+      "excluded_cross_sheet_rows": 22523,
+      "first_sheet_input": 525461,
+      "first_sheet_retained": 502938,
+      "rule_id": "uci-online-retail-ii-sheet-boundary-v1",
+      "second_sheet_input": 541910,
+      "second_sheet_retained": 541910
+    },
+    "time_semantics": {
+      "cutoff_inclusive": true,
+      "field": "event_time_local",
+      "timezone": "unknown"
+    }
+  },
+  "publication": {
+    "bundle_strategy": "same-parent temporary directory, file fsync, directory fsync, then atomic directory rename",
+    "concurrent_writers": "unsupported; fail if the final target appears during publication",
+    "existing_complete_valid_bundle": "verified no-op",
+    "existing_invalid_or_partial_bundle": "fail closed without overwrite",
+    "in_worktree_data_root": "the data-root directory itself must be matched by a Git ignore rule before any write, thereby covering every raw, normalized, receipt, and staging descendant",
+    "json_encoding": "UTF-8 sorted-key compact JSON followed by one newline",
+    "no_replace": "publication uses one host-native atomic no-replace rename and never places a symlink at the final path",
+    "posix_directory_mode": "0700",
+    "posix_file_mode": "0600"
+  },
+  "parquet_writer_configuration": {
+    "emitted_in_normalized_manifest": false,
+    "parquet_format_version": "2.6",
+    "use_dictionary": true,
+    "write_statistics": true
+  },
+  "raw_manifest": {
+    "archive": {
+      "bytes": 45622418,
+      "path": "online-retail-ii.zip",
+      "sha256": "572e36277c2390fbfde10664750731e0a86f55e33470d91919085f0408e67bfb"
+    },
+    "capabilities": {
+      "complete_product_opportunity_universe": "unsupported",
+      "historical_provider_revision_state": "unknown",
+      "independent_external_demand": "unsupported",
+      "integrated_productquant_v0_1": "unsupported",
+      "marketplace_listing_state": "unsupported",
+      "marketplace_supply_competition": "unsupported",
+      "timezone": "unknown",
+      "transaction_event_history": "supported"
+    },
+    "fixed_values": {
+      "adapter_version": "uci-online-retail-ii.v1",
+      "artifact_id": "uci-online-retail-ii:sha256:572e36277c2390fbfde10664750731e0a86f55e33470d91919085f0408e67bfb",
+      "raw_response_reference": "online-retail-ii.zip",
+      "schema_version": "productquant.raw-artifact-manifest.v1"
+    },
+    "member": {
+      "bytes": 45622278,
+      "name": "online_retail_II.xlsx",
+      "sha256": "bcbe73b35f5b7babf197fb0cb983a11f5d9ff929078d4aa53d171b1f2df2e980"
+    },
+    "required_keys": [
+      "schema_version",
+      "artifact_id",
+      "source",
+      "retrieval",
+      "archive",
+      "member",
+      "adapter_version",
+      "raw_response_reference",
+      "capabilities"
+    ],
+    "retrieval": {
+      "absent_optional_http_header_value": null,
+      "mode": "download",
+      "query_parameters": {},
+      "rate_limit_state": "unknown",
+      "required_keys": [
+        "retrieved_at_utc",
+        "mode",
+        "http_status",
+        "etag",
+        "last_modified",
+        "content_type",
+        "content_length",
+        "rate_limit_state",
+        "query_parameters"
+      ]
+    },
+    "source": {
+      "attribution": "Chen, D. (2012). Online Retail II [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C5CG6D",
+      "id": "uci-online-retail-ii",
+      "licence_spdx": "CC-BY-4.0",
+      "licence_url": "https://creativecommons.org/licenses/by/4.0/",
+      "original_url": "https://cdn.uci-ics-mlr-prod.aws.uci.edu/502/online%2Bretail%2Bii.zip",
+      "required_keys": [
+        "id",
+        "original_url",
+        "final_url",
+        "licence_spdx",
+        "licence_url",
+        "attribution"
+      ]
+    }
+  }
+}

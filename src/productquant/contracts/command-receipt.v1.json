@@ -1,0 +1,116 @@
+{
+  "artifact_summary": {
+    "action_values": [
+      "created",
+      "verified"
+    ],
+    "keys": [
+      "artifact_id",
+      "manifest_path",
+      "data_path",
+      "action"
+    ],
+    "path_semantics": "absolute"
+  },
+  "cli": {
+    "commands": [
+      "uci.fetch",
+      "uci.normalize",
+      "uci.verify",
+      "uci.prepare"
+    ],
+    "exit_codes": {
+      "integrity_or_schema_drift": 4,
+      "local_io_or_state_conflict": 5,
+      "network_failure": 3,
+      "success": 0,
+      "unexpected_internal_failure": 1,
+      "usage_error": 2
+    },
+    "help": "ordinary text on stdout with no receipt",
+    "recognized_failure": {
+      "keys": [
+        "command",
+        "status",
+        "error",
+        "receipt_path"
+      ],
+      "status": "error",
+      "stream": "stderr"
+    },
+    "serialization": "exactly one sorted-key compact JSON object followed by one newline",
+    "success": {
+      "keys": [
+        "command",
+        "status",
+        "data_root",
+        "artifacts",
+        "statistics",
+        "receipt_path"
+      ],
+      "status_values": [
+        "created",
+        "verified"
+      ],
+      "stream": "stdout"
+    },
+    "pre_command_usage_failure": {
+      "command": null,
+      "error_code": "usage_error",
+      "receipt_path": null,
+      "status": "error",
+      "stream": "stderr"
+    },
+    "recognized_command_usage_failure": {
+      "command": "recognized uci.<operation>",
+      "error_code": "usage_error",
+      "receipt": "attempted whenever the data root is writable",
+      "receipt_path": "absolute path when publication succeeds; otherwise null",
+      "status": "error",
+      "stream": "stderr"
+    }
+  },
+  "contract_id": "productquant.command-receipt.v1",
+  "privacy": {
+    "forbidden_content": [
+      "transaction row values",
+      "customer-reference values",
+      "raw response bodies"
+    ],
+    "statistics": "aggregate counts only"
+  },
+  "receipt": {
+    "failure_progress": "A failed multi-step command preserves every artifact summary completed before the failing step; unstarted or incomplete artifacts remain null.",
+    "artifact_keys": [
+      "raw",
+      "normalized"
+    ],
+    "data_root_semantics": "absolute path",
+    "error": "null on success; otherwise an object with code and sanitized message",
+    "path": "data/receipts/uci-online-retail-ii/<run-id>.json",
+    "required_keys": [
+      "schema_version",
+      "run_id",
+      "command",
+      "started_at_utc",
+      "finished_at_utc",
+      "status",
+      "data_root",
+      "git_revision",
+      "git_dirty",
+      "artifacts",
+      "statistics",
+      "error"
+    ],
+    "run_id": {
+      "format": "<UTC YYYYMMDDTHHMMSSffffffZ>-<eight lowercase UUID4 hex characters>",
+      "regular_expression": "^[0-9]{8}T[0-9]{12}Z-[0-9a-f]{8}$"
+    },
+    "schema_version": "productquant.command-receipt.v1",
+    "status_values": [
+      "success",
+      "failure"
+    ],
+    "storage": "immutable and retained indefinitely"
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "coercion": {
+    "description_observed": "Preserve strings byte-for-text; convert only integral numeric cells to base-10 text; preserve null; reject every other cell type.",
+    "event_time_local": "Require a timezone-naive datetime and preserve microseconds; never attach or infer a timezone.",
+    "identifiers": "Preserve source strings without trimming or case normalization; convert only integral numeric cells to base-10 text without a .0 suffix; reject booleans, null required identifiers, fractional numbers, and other cell types.",
+    "invoice_is_cancellation": "True exactly when source_invoice_id starts with uppercase C; comparison is case-sensitive.",
+    "quantity": "Require an integral numeric value in the inclusive signed-int64 range -9223372036854775808 through 9223372036854775807 and preserve its sign.",
+    "unit_price": "Construct Decimal from the parser value's base-10 string, require exact fit in decimal128(18,3), preserve sign, and never round."
+  },
+  "constants": {
+    "currency_code": "GBP",
+    "schema_version": "transaction_event.v1",
+    "source_id": "uci-online-retail-ii",
+    "source_member": "online_retail_II.xlsx"
+  },
+  "contract_id": "productquant.transaction-event.v1",
+  "event_id": {
+    "first_data_row_number": 2,
+    "row_number_semantics": "1-based physical Excel row including the header",
+    "sheet_tokens": {
+      "Year 2009-2010": "year-2009-2010",
+      "Year 2010-2011": "year-2010-2011"
+    },
+    "template": "<raw_artifact_id>:<sheet-token>:<source-row-number>"
+  },
+  "fields": [
+    {
+      "name": "event_id",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "raw_artifact_id",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "source_id",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "source_member",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "source_sheet",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "source_row_number",
+      "nullable": false,
+      "type": "int64"
+    },
+    {
+      "name": "event_time_local",
+      "nullable": false,
+      "type": "timestamp[us]"
+    },
+    {
+      "name": "source_invoice_id",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "source_product_code",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "description_observed",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "name": "quantity",
+      "nullable": false,
+      "type": "int64"
+    },
+    {
+      "name": "unit_price",
+      "nullable": false,
+      "type": "decimal128(18,3)"
+    },
+    {
+      "name": "currency_code",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "customer_reference",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "name": "country_observed",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "invoice_is_cancellation",
+      "nullable": false,
+      "type": "bool"
+    },
+    {
+      "name": "schema_version",
+      "nullable": false,
+      "type": "string"
+    }
+  ],
+  "forbidden_transformations": [
+    "cross-sheet or within-sheet tuple deduplication outside the accepted sheet-boundary stitch",
+    "trimming or case normalization of observed strings",
+    "imputation of null values",
+    "absolute-value conversion, clipping, winsorization, or removal of signed/extreme values",
+    "future-derived enrichment or backward filling of descriptions, prices, codes, or aggregates",
+    "manufacturing marketplace listing, supply, competition, independent-demand, or product-universe fields"
+  ],
+  "ordering": "Accepted sheet order followed by ascending physical source_row_number within each retained sheet.",
+  "point_in_time": {
+    "as_of_rule": "A future consumer at cutoff t may use only rows where event_time_local <= t.",
+    "cutoff_input": "offset-free dataset-local naive timestamp",
+    "future_target_rule": "A separately authorized future target must begin strictly after t.",
+    "provider_revision_state": "unknown"
+  },
+  "schema_version": "transaction_event.v1"
+}

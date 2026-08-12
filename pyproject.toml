@@ -1,0 +1,28 @@
+[project]
+name = "productquant"
+version = "0.1.0.dev0"
+description = "Backtestable, explainable quantitative research for e-commerce product selection."
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "duckdb>=1.5.5,<2",
+    "openpyxl>=3.1.5,<4",
+    "pyarrow>=25.0.1,<26",
+]
+
+[project.scripts]
+productquant = "productquant.cli:main"
+
+[dependency-groups]
+dev = ["pytest>=9.1.1,<10"]
+
+[build-system]
+requires = ["uv_build>=0.11.8,<0.12"]
+build-backend = "uv_build"
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+testpaths = ["tests"]
+markers = [
+    "full_data: requires the pinned official UCI archive under the selected data root",
+]

@@ -1,0 +1,111 @@
+{
+  "adapter_version": "uci-online-retail-ii.v1",
+  "archive": {
+    "bytes": 45622418,
+    "member_count": 1,
+    "path": "online-retail-ii.zip",
+    "sha256": "572e36277c2390fbfde10664750731e0a86f55e33470d91919085f0408e67bfb"
+  },
+  "artifact_identifiers": {
+    "normalized_artifact_id": "uci-online-retail-ii:sha256:572e36277c2390fbfde10664750731e0a86f55e33470d91919085f0408e67bfb:transaction-event.v1",
+    "raw_artifact_id": "uci-online-retail-ii:sha256:572e36277c2390fbfde10664750731e0a86f55e33470d91919085f0408e67bfb"
+  },
+  "capabilities": {
+    "complete_product_opportunity_universe": "unsupported",
+    "historical_provider_revision_state": "unknown",
+    "independent_external_demand": "unsupported",
+    "integrated_productquant_v0_1": "unsupported",
+    "marketplace_listing_state": "unsupported",
+    "marketplace_supply_competition": "unsupported",
+    "timezone": "unknown",
+    "transaction_event_history": "supported"
+  },
+  "contract_id": "productquant.uci-online-retail-ii-source.v1",
+  "currency": {
+    "code": "GBP",
+    "semantics": "provider-declared sterling unit price"
+  },
+  "full_data_invariants": {
+    "cancellation_rows": 19165,
+    "event_time_max": "2011-12-09T12:50:00.000000",
+    "event_time_min": "2009-12-01T07:45:00.000000",
+    "excluded_cross_sheet_rows": 22523,
+    "first_sheet_input": 525461,
+    "first_sheet_retained": 502938,
+    "missing_customer_rows": 235287,
+    "missing_description_rows": 4275,
+    "negative_price_rows": 5,
+    "negative_quantity_rows": 22557,
+    "numeric_description_rows": 4,
+    "quantity_max": 80995,
+    "quantity_min": -80995,
+    "row_count": 1044848,
+    "second_sheet_input": 541910,
+    "second_sheet_retained": 541910,
+    "unique_event_ids": 1044848,
+    "unique_invoices": 53628,
+    "unique_stock_codes": 5305,
+    "unit_price_max": "38970.000",
+    "unit_price_min": "-53594.360",
+    "zero_price_rows": 6024
+  },
+  "licence": {
+    "attribution": "Chen, D. (2012). Online Retail II [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C5CG6D",
+    "spdx": "CC-BY-4.0",
+    "url": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  "member": {
+    "bytes": 45622278,
+    "name": "online_retail_II.xlsx",
+    "sha256": "bcbe73b35f5b7babf197fb0cb983a11f5d9ff929078d4aa53d171b1f2df2e980"
+  },
+  "normalizer_version": "uci-online-retail-ii-normalizer.v1",
+  "source": {
+    "download_url": "https://cdn.uci-ics-mlr-prod.aws.uci.edu/502/online%2Bretail%2Bii.zip",
+    "doi": "https://doi.org/10.24432/C5CG6D",
+    "id": "uci-online-retail-ii",
+    "landing_page": "https://archive.ics.uci.edu/dataset/502/online+retail+ii"
+  },
+  "stitch": {
+    "cutoff_local": "2010-12-01T00:00:00.000000",
+    "rule_id": "uci-online-retail-ii-sheet-boundary-v1",
+    "sheets": [
+      {
+        "input_rows": 525461,
+        "name": "Year 2009-2010",
+        "retain": "InvoiceDate < cutoff_local",
+        "retained_rows": 502938,
+        "token": "year-2009-2010"
+      },
+      {
+        "input_rows": 541910,
+        "name": "Year 2010-2011",
+        "retain": "InvoiceDate >= cutoff_local",
+        "retained_rows": 541910,
+        "token": "year-2010-2011"
+      }
+    ],
+    "within_sheet_tuple_deduplication": "forbidden"
+  },
+  "time_semantics": {
+    "representation": "timestamp[us] without timezone",
+    "timezone": "unknown"
+  },
+  "workbook_schema": {
+    "cell_type_policy": "Read formulas without evaluation and reject formula or Excel-error cells before value coercion; accepted ordinary values remain subject to transaction_event.v1 field coercion.",
+    "headers": [
+      "Invoice",
+      "StockCode",
+      "Description",
+      "Quantity",
+      "InvoiceDate",
+      "Price",
+      "Customer ID",
+      "Country"
+    ],
+    "sheet_order": [
+      "Year 2009-2010",
+      "Year 2010-2011"
+    ]
+  }
+}

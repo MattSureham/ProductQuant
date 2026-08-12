@@ -56,6 +56,11 @@ archive {path, bytes, sha256}
 member {name, bytes, sha256}
 adapter_version
 raw_response_reference
+capabilities {transaction_event_history, marketplace_listing_state,
+              marketplace_supply_competition, independent_external_demand,
+              complete_product_opportunity_universe,
+              integrated_productquant_v0_1, historical_provider_revision_state,
+              timezone}
 ```
 
 `mode` is `download` for an online acquisition. Offline fetch never opens a network connection and only verifies an already complete raw bundle; it cannot manufacture missing retrieval metadata. HTTP fields absent from a response are JSON `null`; headers are allowlisted to the named fields.
@@ -234,3 +239,4 @@ Exit codes are `0` success, `2` usage, `3` network, `4` source-integrity/schema 
 |---|---|---|---|---|
 | `2026-08-12T07:24:20Z` | `NONE` | `PROPOSED` | `agent:codex-phase1` | Exact owner-approved Phase 1 architecture recorded for independent proposal review before implementation. |
 | `2026-08-12T07:47:28Z` | `PROPOSED` | `ACCEPTED` | `agent:codex-phase1` | Owner authority `DECISION-PHASE1-01` plus independent review round 3 `APPROVED`; implementation review remains required. |
+| `2026-08-12T08:27:52Z` | `ACCEPTED` | `ACCEPTED` | `agent:codex-phase1` | Reconciled the raw-manifest contract with the exact pre-existing owner requirement that every manifest contain the eight capability declarations; this corrects an accidental proposal-stage narrowing and introduces no new authority or capability. |
