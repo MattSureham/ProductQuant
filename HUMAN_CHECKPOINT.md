@@ -6,20 +6,18 @@ This checkpoint is a summary and decision queue, not a source of project truth. 
 
 ## Checkpoint metadata
 
-- **Generated UTC:** `2026-08-12T07:47:28Z`
-- **Prepared by:** `agent:codex-phase1`
-- **Period covered:** Phase 0 completion commit `9efee6d` through owner authorization of the restricted Phase 1 foundation.
-- **Specification status reviewed:** `PROJECT_SPEC.md` v0.1 now contains an accepted Restricted Phase 1 contract limited to UCI transaction events.
-- **Implementation/reference state:** Authority and independent proposal review are complete; the Phase 1 ADR is accepted and its issue is `IMPLEMENTING`. No code or dependency exists at this exact checkpoint.
-- **Prior checkpoint:** Phase 0 checkpoint generated `2026-08-12T06:39:43Z` and retained in Git history.
+- **Generated UTC:** `2026-08-13T01:04:45Z`
+- **Prepared by:** `agent:claude-code-reconciliation`
+- **Period covered:** Owner authorization of the restricted Phase 1 foundation through implementation, independent review, issue closure, and takeover reconciliation at `c937c3f`.
+- **Specification status reviewed:** `PROJECT_SPEC.md` v0.1 contains the accepted Restricted Phase 1 contract limited to UCI transaction events; it is unchanged by this milestone's closure.
+- **Implementation/reference state:** Restricted Phase 1 is implemented at `c937c3f8eca6b9d54ad77c47313647710abbe7d8` (local only, three commits ahead of `origin/main`; no push authorised). The required independent post-implementation review returned `APPROVED` and the Phase 1 issue is `CLOSED`. Local ignored raw/normalized artifacts verify against the recorded digests.
+- **Prior checkpoint:** Phase 1 authorization checkpoint generated `2026-08-12T07:47:28Z` and retained in Git history.
 
 ## System mental model
 
-ProductQuant remains a research prototype with no runtime implementation yet. The owner has now authorised one deliberately restricted Phase 1 data foundation: UCI Online Retail II transaction events, immutable local raw storage, normalized Parquet, ephemeral DuckDB verification, and a four-command developer CLI. The exact product contract is in [`PROJECT_SPEC.md`](PROJECT_SPEC.md); the architecture proposal is in [`ADR-20260812T072420Z-uci-transaction-data-foundation`](ADR/ADR-20260812T072420Z-uci-transaction-data-foundation.md).
+ProductQuant now has exactly one runtime capability: the owner-authorised restricted Phase 1 data foundation. A four-command CLI (`productquant uci fetch|normalize|verify|prepare`) acquires the pinned UCI Online Retail II ZIP, preserves it byte-exact under Git-ignored owner-only `data/`, normalizes 1,044,848 retained transaction events into the versioned `transaction_event.v1` Parquet artifact with physical source-row provenance and the approved sheet-boundary stitch, and verifies aggregates through ephemeral in-memory DuckDB. The exact product contract is in [`PROJECT_SPEC.md`](PROJECT_SPEC.md); the accepted architecture is in [`ADR-20260812T072420Z-uci-transaction-data-foundation`](ADR/ADR-20260812T072420Z-uci-transaction-data-foundation.md); complete verification is in [`EVIDENCE-20260812T091334Z-phase1-data-foundation-verification`](EVIDENCE/EVIDENCE-20260812T091334Z-phase1-data-foundation-verification.md).
 
-**CONFIRMED:** no examined source currently provides an accessible, authorised, reconstructable historical marketplace universe plus independent historical demand. **CONFIRMED:** UCI Online Retail II can support a narrow transaction-event backtest after its verified 22,523-row cross-sheet overlap is removed by provenance boundary and only invoices known by each cutoff are used; it contains no marketplace listing state or external demand. **INFERRED:** eBay is the strongest forward marketplace candidate and Google Trends is the strongest demand family, but both remain gated by access, retention/use terms, and authenticated evidence.
-
-The authorised milestone builds only the transaction-event data foundation. It does not authorise Phase 2 factors or any ranking/backtest, and it does not resolve marketplace or demand access. Proposal review round 1 lacked the newest owner approval and identified under-specified contracts; round 2 confirmed authority and the revised architecture, independently reproduced the workbook schema probe, and requested three record-level corrections. Those corrections are now ready for final re-review.
+The foundation contains no factor, universe, target, ranking, backtest, marketplace state, or independent demand, and every manifest carries the eight capability declarations saying so. **CONFIRMED:** no examined source currently provides an accessible, authorised, reconstructable historical marketplace universe plus independent historical demand. **INFERRED:** eBay is the strongest forward marketplace candidate and Google Trends is the strongest demand family, but both remain gated by access, retention/use terms, and authenticated evidence.
 
 ## Material changes since the prior checkpoint
 
@@ -30,6 +28,8 @@ The authorised milestone builds only the transaction-event data foundation. It d
 | Marketplace and demand blockers separated from the completed spike | Keep unresolved human/provider work alive after Phase 0 documentation closes. | Phase 1 marketplace/demand collection remains blocked. | [Marketplace issue](ISSUES/ISSUE-20260812T061002Z-marketplace-source-authorization.md); [demand issue](ISSUES/ISSUE-20260812T061003Z-demand-source-validation.md) |
 | Restricted Phase 1 scope and contract accepted | Persist `DECISION-PHASE0-01` and the approved decision-complete implementation plan. | Authorises only UCI transaction-event raw/normalized persistence, schema, CLI, dependencies, and local verification; Phase 2+ remains unauthorised. | [`PROJECT_SPEC.md`](PROJECT_SPEC.md); [Phase 1 issue](ISSUES/ISSUE-20260812T072420Z-uci-transaction-data-foundation.md); [proposed ADR](ADR/ADR-20260812T072420Z-uci-transaction-data-foundation.md) |
 | Workbook schema/precision contract probed | Resolve required/null/type/time/price representation uncertainty before implementation. | Confirms the pinned workbook fits the accepted lossless schema while preserving fail-closed source-version behavior. | [`EVIDENCE-20260812T073451Z-uci-schema-contract-probe`](EVIDENCE/EVIDENCE-20260812T073451Z-uci-schema-contract-probe.md); independently reproduced in ADR review round 2. |
+| Restricted Phase 1 implemented and closed | Deliver the owner-approved UCI transaction-event foundation under the accepted ADR. | Adds a locked Python package, four-command CLI, immutable content-addressed raw state, `transaction_event.v1` Parquet, ephemeral DuckDB verification, and row-free manifests/receipts; no Phase 2 capability added. | [`ISSUE-20260812T072420Z-uci-transaction-data-foundation`](ISSUES/ISSUE-20260812T072420Z-uci-transaction-data-foundation.md) `CLOSED`; [`EVIDENCE-20260812T091334Z-phase1-data-foundation-verification`](EVIDENCE/EVIDENCE-20260812T091334Z-phase1-data-foundation-verification.md); [registry status](SOURCE_REGISTRY.md) |
+| Two independent implementation-review rounds corrected defects | Independent reviewers reproduced publication-overwrite/symlink, permission-mutation, workbook-cell, quantity-bound, download-bound, and staging-ignore defects before closure. | Publication is now atomic no-clobber with preserved modes, bounded fail-closed download with exact range recovery, rejected formula/error cells and int64 overflow, and root-level Git-ignore enforcement for in-worktree data roots. | Append-only review rounds and corrections in the Phase 1 issue and evidence; final round `APPROVED` at `2026-08-12T10:19:24Z` |
 
 ## Architecture decisions
 
@@ -37,7 +37,7 @@ The authorised milestone builds only the transaction-event data foundation. It d
 
 | ADR | Status | Decision and consequence | Owner authority evidence |
 |---|---|---|---|
-| [`ADR-20260812T072420Z-uci-transaction-data-foundation`](ADR/ADR-20260812T072420Z-uci-transaction-data-foundation.md) | `ACCEPTED` | Adopts the exact restricted local Python/immutable raw/Parquet/ephemeral DuckDB/event/CLI foundation. | `DECISION-PHASE1-01`; independent proposal review round 3 `APPROVED`. |
+| [`ADR-20260812T072420Z-uci-transaction-data-foundation`](ADR/ADR-20260812T072420Z-uci-transaction-data-foundation.md) | `ACCEPTED` | Adopts the exact restricted local Python/immutable raw/Parquet/ephemeral DuckDB/event/CLI foundation. | `DECISION-PHASE1-01`; independent proposal review round 3 `APPROVED`; independent post-implementation architecture review `APPROVED` at `2026-08-12T10:19:24Z`. |
 
 ### Proposed or disputed
 
@@ -52,14 +52,14 @@ The authorised milestone builds only the transaction-event data foundation. It d
 
 | Cost | Why introduced/removed | Coverage | Residual debt |
 |---|---|---|---|
-| Proposed Python packaging and five locked packages | Required for streaming XLSX, fixed-schema Parquet, ephemeral SQL verification, packaging, and tests. | Planned lock/build/unit/integration/full-data/independent checks. | Unverified until implementation and independent review. |
-| Proposed immutable local data/manifests and `transaction_event.v1` | Required Phase 1 persistence and cross-module contracts. | Planned digest, atomicity, drift, schema, PIT, and reproducibility tests. | Unverified until implementation and independent review. |
+| Python packaging and five locked packages | Required for streaming XLSX, fixed-schema Parquet, ephemeral SQL verification, packaging, and tests. | Exact lock, build, 133-test suite, explicit full-data gate, and independent review passed. | Dependency or Python-version changes require deliberate re-locking and revalidation. |
+| Immutable local data/manifests and `transaction_event.v1` | Required Phase 1 persistence and cross-module contracts. | Digest, no-clobber atomicity, fault/race, drift, schema, PIT, privacy, and reproducibility tests passed; byte-identical isolated rebuild. | Linux/Windows native publication, real power loss, and cross-platform byte identity remain unexercised/unknown and are explicitly recorded. |
 
 ### Drift assessment
 
-- **Last independent drift review:** `NOT PERFORMED — implementation still does not exist.`
-- **Classification:** `UNKNOWN — proposal review pending`
-- **Owner-relevant differences:** The accepted restricted specification deliberately implements only UCI transaction events. It does not satisfy the integrated marketplace/demand v0.1 architecture described by the longer-term specification.
+- **Last independent drift review:** `2026-08-12T10:19:24Z` by `agent:codex-phase1-final-independent-review` at clean revision `c937c3f`.
+- **Classification:** `ALIGNED` for all approved persistence, schema, dependency, CLI, privacy, and scope decisions; one `JUSTIFIED_DEVIATION` (bounded exact-source HTTP Range recovery, backed by preserved proxy-truncation evidence); remaining items `UNKNOWN` (Linux/Windows publication, power loss, cross-platform bytes, provider revision/timezone) and explicitly bounded. No `UNJUSTIFIED_DRIFT` remains.
+- **Owner-relevant differences:** The accepted restricted specification deliberately implements only UCI transaction events. It does not satisfy the integrated marketplace/demand v0.1 architecture described by the longer-term specification; section 50 remains unmet.
 
 ## Assumptions and uncertainty that changed
 
@@ -71,10 +71,10 @@ The authorised milestone builds only the transaction-event data foundation. It d
 
 ## Confidence and verification
 
-- **What is directly verified:** Phase 0 source evidence remains current. A fifth evidence record now scans every UCI workbook row and confirms required/null/type/integrality/naïve-time/decimal constraints with a complete reproduction command.
-- **What was independently reviewed:** Phase 0 is approved. Restricted Phase 1 proposal review round 1 blocked on omitted authority context and incomplete contracts; round 2 confirmed the newest exact owner approval, independently reproduced the workbook schema/precision counts, and requested three record corrections. Final re-review is pending.
-- **What was not run or remains unverified:** No implementation, lock, package build, Parquet artifact, or CLI test exists yet. No authenticated provider response, paid/trial task, long-term revision study, or legal review occurred.
-- **Known regressions or unresolved risks:** No runtime regression is possible. Source access, permitted raw retention, provider revisions, historical marketplace availability, and restrictive licences remain unresolved in the blocker issues.
+- **What is directly verified:** Phase 0 source evidence remains current through 2026-09-11. The Phase 1 foundation at `c937c3f` passed the locked 133-test suite, explicit official full-data gate, clean offline prepare/verify, byte-identical isolated rebuild, package/CLI gates, and repository/privacy scans; artifact digests match the recorded values. A fresh takeover participant independently reran the critical gates at `2026-08-13T01:04:45Z` with identical results.
+- **What was independently reviewed:** Phase 0 is approved. The Restricted Phase 1 proposal was approved in review round 3 before implementation. Post-implementation independent review rounds 1–2 required and verified corrections; round 3 approved the final revision and classified architecture drift with no remaining material finding.
+- **What was not run or remains unverified:** Linux/Windows native no-replace publication, real power-loss behavior, cross-platform Parquet byte identity, provider revision history, and dataset timezone. No authenticated provider response, paid/trial task, long-term revision study, or legal review occurred.
+- **Known regressions or unresolved risks:** No runtime regression is known. Local ignored raw data are not Git-protected; reproduction depends on retaining the verified raw bundle or UCI continuing to serve the pinned bytes. Customer references remain sensitive local pseudonymous data. Source access, permitted raw retention, provider revisions, historical marketplace availability, and restrictive licences remain unresolved in the blocker issues.
 
 ## Human attention required
 
@@ -89,10 +89,11 @@ A response is approval evidence only when its decision, responder identity, UTC 
 
 ## No human attention required
 
-- No further owner response is needed for the already approved restricted Phase 1 foundation.
-- `DECISION-PHASE0-02` and `DECISION-PHASE0-03` may remain pending; no demand/marketplace access work will occur in this milestone.
+- Restricted Phase 1 is complete and closed; no further owner response is needed for it.
+- `DECISION-PHASE0-02` and `DECISION-PHASE0-03` may remain pending; no demand/marketplace access work is authorised.
+- No push or publication is requested; all Phase 1 commits remain local.
 
 ## Next checkpoint trigger
 
-- **Trigger:** Independent ADR review, restricted Phase 1 completion/review, source documentation older than 30 days, provider access/terms change, or owner response to another pending decision.
-- **Expected owner action before then:** None; implementation may proceed after the independent ADR review accepts the proposal.
+- **Trigger:** Owner response to a pending decision, a Phase 2 proposal, dependency/contract changes, source documentation older than 30 days (after 2026-09-11), or provider access/terms/digest changes.
+- **Expected owner action before then:** None required; optionally respond to `DECISION-PHASE0-02`/`DECISION-PHASE0-03` when ready.

@@ -179,9 +179,9 @@ Exit codes are `0` success, `2` usage, `3` network, `4` source-integrity/schema 
 
 | Cost introduced | Why necessary | Contract/test/evidence coverage | Residual gap and linked issue |
 |---|---|---|---|
-| `openpyxl`, `pyarrow`, `duckdb`, `pytest`, and `uv_build` | Stream the XLSX, preserve exact types, write/query Parquet, package, and test the foundation. | Lockfile, dependency review, unit/integration/full-data tests, and independent review. | Provider/library upgrades require deliberate re-locking and revalidation; owned by the Phase 1 issue. |
-| Immutable local raw/normalized state and manifests | Requirements 16, 18, 43, and 51 require reproducible raw persistence and normalized datasets. | Digest, atomicity, idempotence, corruption, and deterministic rebuild tests. | Concurrent invocation is deliberately unsupported and documented. |
-| `transaction_event.v1` cross-module contract | Later factor/backtest work needs stable event-time and provenance semantics. | Machine-readable contract, exact-schema tests, synthetic leakage tests, and full-data acceptance. | Downstream cancellation/return/netting policy is deliberately deferred to a separately authorised phase. |
+| `openpyxl`, `pyarrow`, `duckdb`, `pytest`, and `uv_build` | Stream the XLSX, preserve exact types, write/query Parquet, package, and test the foundation. | Exact lock, dependency review, unit/integration/full-data tests, package build, and independent review passed. | Provider/library upgrades require deliberate re-locking and revalidation. |
+| Immutable local raw/normalized state and manifests | Requirements 16, 18, 43, and 51 require reproducible raw persistence and normalized datasets. | Digest, no-clobber atomicity, fault/race, idempotence, corruption, privacy, and deterministic-rebuild tests passed. | Concurrent success remains deliberately unsupported; Linux/Windows native publication and real power loss remain unexercised. |
+| `transaction_event.v1` cross-module contract | Later separately authorised research needs stable event-time and provenance semantics. | Machine-readable contract, exact-schema tests, synthetic leakage tests, full-data acceptance, and independent review passed. | Downstream cancellation/return/netting policy remains deferred to a separately authorised phase. |
 | Customer reference preservation | Retains lossless source fidelity for potential demand-diversity research. | Local-only storage, no row logging/evidence, raw provenance, and tracked-data scans. | Any publication or broader use requires separate privacy/authority review. |
 
 ## Evidence and assumptions
@@ -190,6 +190,7 @@ Exit codes are `0` success, `2` usage, `3` network, `4` source-integrity/schema 
 - **CONFIRMED:** A complete follow-up type/precision probe found no null in a required source field, no non-integral quantity/identifier number, no timezone-aware source timestamp, and no price scale above three decimals; see [`EVIDENCE-20260812T073451Z-uci-schema-contract-probe`](../EVIDENCE/EVIDENCE-20260812T073451Z-uci-schema-contract-probe.md).
 - **CONFIRMED:** The UCI record declares CC BY 4.0 and unit price in sterling.
 - **CONFIRMED:** The owner approved UCI solely as a transaction-event historical research substrate and explicitly withheld marketplace-state claims.
+- **CONFIRMED:** Revision `c937c3f8eca6b9d54ad77c47313647710abbe7d8` passed the complete clean implementation gates and final independent architecture review documented in [`EVIDENCE-20260812T091334Z-phase1-data-foundation-verification`](../EVIDENCE/EVIDENCE-20260812T091334Z-phase1-data-foundation-verification.md) and the linked issue.
 - **INFERRED:** Content-addressed raw ZIP plus one normalized Parquet truth is the smallest durable storage design satisfying the accepted Phase 1 requirements.
 - **UNKNOWN:** Dataset-local timezone, provider revision/as-of state, cross-platform byte-identical Parquet output, and future source commonality remain unestablished.
 
@@ -233,6 +234,18 @@ Exit codes are `0` success, `2` usage, `3` network, `4` source-integrity/schema 
 - **Disposition:** `APPROVED`
 - **Prior-round resolution:** Round 1 authority/contract/privacy/schema findings and round 2 evidence-command/usage-JSON/current-record findings are all resolved.
 
+### 2026-08-12T10:19:24Z — agent:codex-phase1-final-independent-review — post-implementation architecture drift
+
+- **Reviewed repository state:** Clean implementation revision `c937c3f8eca6b9d54ad77c47313647710abbe7d8` (tree `7b7e50e376c1377ea43d267741f9ef81ba7cd4bd`) plus implementor-owned Phase 1 issue/evidence records; ignored artifacts were inspected aggregate/provenance-only.
+- **Derived expected architecture:** Restricted Phase 1 specification, this accepted ADR, four executable contracts, and tests require one UCI-specific adapter, immutable content-addressed raw state, Parquet truth, ephemeral DuckDB, the exact event/stitch/as-of contract, a four-command CLI, local ignored private data, capability denials, and no Phase 2 research implementation.
+- **Commands or procedures:** Complete contract/code/test/record and prior-finding inspection; frozen sync/lock/compile; 133-test default and explicit full-data suites; offline prepare/verify; package and six CLI-help gates; repository/privacy/artifact scans; and an independent temporary-Git-repository reproduction of both rejected final-files-only and accepted root-level ignore policies.
+- **Classifications:** `ALIGNED` — dependencies, persistence, schema, CLI, privacy enforcement, point-in-time semantics, source-specific scope, and capability denials. `JUSTIFIED_DEVIATION` — bounded exact-source HTTP Range recovery, supported by the recorded proxy truncation and compatible with the fixed-source contract. `UNKNOWN` — Linux/Windows native no-replace execution, real power-loss behavior, cross-platform Parquet byte identity, provider revision state, and timezone; each is explicitly bounded and is not implementation drift. `UNJUSTIFIED_DRIFT` — none.
+- **Prior findings:** Runtime review-round-1 findings 1–6 and 8–11 remained resolved; finding 7 is fully resolved by root-level Git-ignore enforcement, aligned documentation/contracts, a regression, and independent adversarial reproduction.
+- **Material findings:** `NONE`.
+- **Limitations and residual risks:** macOS/APFS only; no new acquisition, real power interruption, Linux/Windows host, or cross-platform build. Ignored local raw data are outside Git protection; customer references remain sensitive local pseudonyms; concurrent success, cancellation/netting, marketplace/demand sources, and all Phase 2 semantics remain unsupported or unauthorised.
+- **Evidence:** Final Phase 1 evidence and the complete append-only review record in the linked issue; reviewer changed no repository file.
+- **Disposition:** `APPROVED`
+
 ## Status history
 
 | UTC time | From | To | Actor | Reason and authority evidence |
@@ -240,3 +253,4 @@ Exit codes are `0` success, `2` usage, `3` network, `4` source-integrity/schema 
 | `2026-08-12T07:24:20Z` | `NONE` | `PROPOSED` | `agent:codex-phase1` | Exact owner-approved Phase 1 architecture recorded for independent proposal review before implementation. |
 | `2026-08-12T07:47:28Z` | `PROPOSED` | `ACCEPTED` | `agent:codex-phase1` | Owner authority `DECISION-PHASE1-01` plus independent review round 3 `APPROVED`; implementation review remains required. |
 | `2026-08-12T08:27:52Z` | `ACCEPTED` | `ACCEPTED` | `agent:codex-phase1` | Reconciled the raw-manifest contract with the exact pre-existing owner requirement that every manifest contain the eight capability declarations; this corrects an accidental proposal-stage narrowing and introduces no new authority or capability. |
+| `2026-08-12T10:20:12Z` | `ACCEPTED` | `ACCEPTED` | `agent:codex-phase1` | Final post-implementation architecture review at `c937c3f` returned `APPROVED`: all approved architecture is aligned, bounded exact-source Range recovery is justified, no unjustified drift remains, and residual unknowns are explicit. |
