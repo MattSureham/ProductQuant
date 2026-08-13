@@ -10,7 +10,7 @@ This checkpoint is a summary and decision queue, not a source of project truth. 
 - **Prepared by:** `agent:claude-code-phase2-proposal`
 - **Period covered:** Phase 1 closure through the Restricted Phase 2 proposal (specification wording, architecture ADR, feasibility evidence) now awaiting owner decision.
 - **Specification status reviewed:** `PROJECT_SPEC.md` v0.1 unchanged; the proposed Restricted Phase 2 wording is recorded in the linked issue and is not yet product authority.
-- **Implementation/reference state:** Restricted Phase 1 remains the only implementation, at local `HEAD`; no Phase 2 code exists or is authorized. Local repository is ahead of `origin/main`; no push authorised.
+- **Implementation/reference state:** Restricted Phase 1 remains the only implementation; no Phase 2 code exists or is authorized. Local `main` is in sync with `origin/main` at `bbde790` after the owner-authorized push at `2026-08-13T01:58:43Z`.
 - **Prior checkpoint:** Phase 1 authorization checkpoint generated `2026-08-12T07:47:28Z` and retained in Git history.
 
 ## System mental model
@@ -93,7 +93,7 @@ A response is approval evidence only when its decision, responder identity, UTC 
 ## No human attention required
 
 - Restricted Phase 1 is complete and closed; no further owner response is needed for it.
-- No push or publication is requested; all commits remain local.
+- The owner authorized and completed one push to `origin/main` at `2026-08-13T01:58:43Z`; no data publication occurred (only repository records/code), and future pushes need fresh authorization.
 
 ## Next checkpoint trigger
 

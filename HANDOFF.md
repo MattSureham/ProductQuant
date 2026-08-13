@@ -11,8 +11,8 @@ Read [`BOOTSTRAP.md`](BOOTSTRAP.md) before using this file. This is operational 
 
 ### Snapshot
 
-- **Snapshot updated UTC:** `2026-08-13T01:42:50Z`
-- **Repository state:** Branch `main`, upstream `origin/main`; `HEAD` is the Phase 1 milestone-closure commit `e21dd45`, four commits ahead of upstream. The independently approved Restricted Phase 2 proposal records (issue, proposed ADR, feasibility evidence) plus checkpoint/HANDOFF updates are committed locally in this run; an untracked `.claude/` local-tooling lock file is deliberately excluded. No push is authorised.
+- **Snapshot updated UTC:** `2026-08-13T01:58:43Z`
+- **Repository state:** Branch `main`, upstream `origin/main`; `HEAD` is `bbde790` (Restricted Phase 2 proposal), pushed to `origin/main` at `2026-08-13T01:58:43Z` under explicit owner instruction (`push`). The working tree is clean apart from an untracked `.claude/` local-tooling lock file, deliberately excluded. Any further push requires fresh authorization.
 - **Evidence cutoff:** Phase 0 external/source checks through 2026-08-12T06:10:26Z; UCI schema/precision revalidation `2026-08-12T07:34:51Z`; Phase 1 implementation verification through `2026-08-12T10:12:21Z`; takeover revalidation `2026-08-13T01:04:45Z`; Phase 2 feasibility profile `2026-08-13T01:16:28Z` (independently reproduced twice).
 - **External checks:** [eBay](EVIDENCE/EVIDENCE-20260812T060100Z-ebay-source-feasibility.md), [demand](EVIDENCE/EVIDENCE-20260812T060101Z-demand-source-feasibility.md), [Amazon/TikTok](EVIDENCE/EVIDENCE-20260812T060102Z-amazon-tiktok-source-feasibility.md), and [historical datasets](EVIDENCE/EVIDENCE-20260812T060103Z-historical-dataset-probes.md), all checked 2026-08-12 and stale after 2026-09-11.
 - **Stale when:** Branch/upstream/ahead/dirty state differs; the expected local commits or evidence files are absent; any cited external documentation, pricing, access rule, licence, endpoint, or dataset digest changes or is older than 30 days; an authenticated response contradicts these findings; a non-terminal task appears; or higher authority changes the scope.
@@ -58,6 +58,13 @@ No non-terminal background task exists. All recovery research/probe agents compl
 Await the human technical owner's response to `DECISION-PHASE2-01`, presented with full links in [`HUMAN_CHECKPOINT.md`](HUMAN_CHECKPOINT.md); on approval, persist the accepted wording in `PROJECT_SPEC.md`, accept the ADR, and only then begin Phase 2 implementation under fresh independent review. No push is permitted.
 
 ## Recent Activity
+
+### 2026-08-13T01:58:43Z — human:technical-owner via agent:claude-code-phase2-proposal — Owner-authorized push
+
+- **Task:** Publish the local commit history on explicit owner instruction (`push`).
+- **Actions performed:** Pushed `3ff8644..bbde790` to `origin/main` (initial commit through the Phase 2 proposal); reconciled this snapshot.
+- **Findings:** **CONFIRMED** — `main` and `origin/main` are in sync at `bbde790`. This single authorization does not generalize; future pushes require fresh owner instruction.
+- **Verification performed:** `git push origin main` output and `git status -sb` confirming sync.
 
 ### 2026-08-13T01:42:50Z — agent:claude-code-phase2-proposal — Restricted Phase 2 specification proposal
 
